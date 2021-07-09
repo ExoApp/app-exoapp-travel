@@ -2,3 +2,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .the-header {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    background-color: hsla(0, 0%, 100%, 0.75);
+  }
+  @responsive{
+    .rounded-custom-b {
+      border-bottom-right-radius: 2.5rem/* 16px */;
+      border-bottom-left-radius: 2.5rem/* 16px */;
+    }
+  }
+}

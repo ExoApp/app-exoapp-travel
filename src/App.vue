@@ -1,11 +1,11 @@
 <template>
   <div class="bg-white min-h-screen font-quicksand">
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, reactive } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
@@ -24,5 +24,17 @@ export default defineComponent({
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap");
+
+.nv-transition {
+  animation: 0.5s appear;
+}
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 </style>
 

@@ -4,27 +4,42 @@ import { State } from "..";
 import { User } from "../../@types/interface";
 import apiService from '../../config/axiosConfig';
 
-interface StoreUser {
-   users: User[]
+export interface StoreUser {
+   users: User[],
+   user: any,
+   photoUrl?: string 
 }
 
 const userModule: Module<StoreUser, State> = {
    namespaced: true,
    state() {
       return {
-         users: []
+         users: [],
+         user: {},
+         photoUrl: 'https://res.cloudinary.com/ekosutrisno/image/upload/v1625803063/avatars/MyAvatar_taylrm.png'
       }
    },
    mutations: {
-      SET_USERS: (state, users) => state.users = users
+      SET_USERS: (state, users) => state.users = users,
+      SET_USER: (state, user) => state.user = user,
+
    },
    actions: {
       setUserData({ commit }) {
          apiService.get(`/user`)
             .then((res: AxiosResponse<User[]>) => {
                commit('SET_USERS', res.data);
+
+               var userFiltered: User[] = res.data.filter((user: User) => user.userId == 1);
+               commit('SET_USER', userFiltered.length ? userFiltered[0] : null);
             })
             .catch(e => console.log(e));
+      },
+      updateUser({dispatch}, payload: any){
+         apiService.put(`/user/${payload.userId}`, payload.userData)
+         .then(() =>{
+            dispatch('setUserData');
+         })
       }
    }
 }
